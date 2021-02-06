@@ -2,34 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TileScript : MonoBehaviour, IPointerClickHandler
 {
-    public int row, col;
-    private MinigameScript mgs;
+    public int TileID;
+    public bool IsHidden = true;
+    public Color HiddenColor;
+    public Color RevealColor;
+    public MinigameScript mgs;
     
     void Start()
     {
-        mgs = transform.parent.GetComponent<MinigameScript>();
+        mgs = gameObject.GetComponentInParent<MinigameScript>();
+        HiddenColor = new Color(0f, 0f, 0f, 1f);
+        RevealColor = new Color(1f, 0f, 0f, 1f);
     }
 
-    public void SetGridIndices(int r, int c)
+    public void SetHiddenColor()
     {
-        row = r;
-        col = c;
+        gameObject.GetComponent<Image>().color = HiddenColor;
+    }
+
+    public void SetRevealColor()
+    {
+        gameObject.GetComponent<Image>().color = RevealColor;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (mgs.gameOn == false)
             return;
-        if (row != 0 && mgs.grid[row - 1, col].name == "Image_BR") // Blank tile is to the north
-            mgs.SwapTiles(row, col, row - 1, col);
-        else if (row != 2 && mgs.grid[row + 1, col].name == "Image_BR") // Blank tile is to the south
-            mgs.SwapTiles(row, col, row + 1, col);
-        else if (col != 0 && mgs.grid[row, col - 1].name == "Image_BR") // Blank tile is to the west
-            mgs.SwapTiles(row, col, row, col - 1);
-        else if (col != 2 && mgs.grid[row, col + 1].name == "Image_BR") // Blank tile is to the east
-            mgs.SwapTiles(row, col, row, col + 1);
+        if( mgs.ScanEnabled && mgs.NumOfScans > 0)
+        {
+            Debug.Log("Object Name: " + gameObject.name + "Tile ID: " + TileID);
+            mgs.ScanTiles(TileID);           
+        }
+
+        if(mgs.ExtractEnabled && mgs.NumOfExtracts > 0)
+        {
+            
+            Debug.Log("Object Name: " + gameObject.name + "Tile ID: " + TileID);
+            mgs.ExtractTiles(TileID);
+            
+        }
     }
 }

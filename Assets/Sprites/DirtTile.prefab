@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8205372369537286708}
   - component: {fileID: 8205372369537286666}
   - component: {fileID: 8205372369537286667}
+  - component: {fileID: -656270540013484749}
   m_Layer: 5
   m_Name: DirtTile
   m_TagString: Untagged
@@ -75,3 +76,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-656270540013484749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8205372369537286709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba23b8d800f4bb4f887368745213f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsHidden: 1
+  HiddenColor: {r: 0, g: 0, b: 0, a: 0}
+  RevealColor: {r: 0, g: 0, b: 0, a: 0}
+  row: 0
+  col: 0
