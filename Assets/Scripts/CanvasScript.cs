@@ -12,4 +12,9 @@ public class CanvasScript : MonoBehaviour
         active = !active;
         minigame.SetActive(active);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

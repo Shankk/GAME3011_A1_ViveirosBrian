@@ -18,19 +18,30 @@ public class MinigameScript : MonoBehaviour
     public int NumOfExtracts;
     int score = 0;
     public TextMeshProUGUI ResourcesText;
-
+    public TextMeshProUGUI ScanText;
+    public TextMeshProUGUI ExtractText;
+    public TextMeshProUGUI MessageText;
     void Start()
     {
         ResourcesText.text = "Resources: " + score;
+        ScanText.text = "Scans: " + NumOfScans;
+        ExtractText.text = "Extracts: " + NumOfExtracts;
         NumOfScans = 6;
         NumOfExtracts = 3;
-        gameObject.SetActive(false);
         for(int i = 0; i < 256; i++)
         {
             tiles[i] = Object.Instantiate(DirtTile);
             tiles[i].transform.SetParent(GridGroup.transform);
             tiles[i].GetComponent<TileScript>().TileID = i;
+            tiles[i].GetComponent<TileScript>().IsHidden = true;
+            tiles[i].GetComponent<TileScript>().SetHiddenColor();
+            tiles[i].GetComponent<TileScript>().RevealColor = new Color(1f, 0f, 0f, 1f);
         }
+        for (int i = 0; i < 4; i++)
+        {
+            CreateNewResource();
+        }
+        gameObject.SetActive(false);
     }
 
     void CreateNewResource()
@@ -76,6 +87,9 @@ public class MinigameScript : MonoBehaviour
                tiles[(TileID + c) + (r * 16)].GetComponent<TileScript>().SetRevealColor();
             }
         }
+        NumOfScans--;
+        ScanText.text = "Scans: " + NumOfScans;
+        
     }
 
     public void ExtractTiles(int TileID)
@@ -120,7 +134,12 @@ public class MinigameScript : MonoBehaviour
                 ResourcesText.text = "Resources: " + score;
             }
         }
-        
+        NumOfExtracts--;
+        ExtractText.text = "Extracts: " + NumOfExtracts;
+        if(NumOfExtracts == 0)
+        {
+            MessageText.text = "Good Job! You've Managed To Gather " + score + " Resources!" + "\n You May Close The Game Or Try Again!";
+        }
     }
     public void ResetGame()
     {
@@ -135,7 +154,12 @@ public class MinigameScript : MonoBehaviour
             CreateNewResource();
         }
         score = 0;
+        NumOfExtracts = 3;
+        NumOfScans = 6;
         ResourcesText.text = "Resources: " + score;
+        ScanText.text = "Scans: " + NumOfScans;
+        ExtractText.text = "Extracts: " + NumOfExtracts;
+        MessageText.text = " ";
     }
 
     public void EnableScanMode()
@@ -156,43 +180,4 @@ public class MinigameScript : MonoBehaviour
         }
     }
 
-    public void Shuffle()
-    {
-        //for (int i = 0; i < tiles.Length; i++)
-        //    shuffled[i] = tiles[i];
-        //shuffled[8].SetActive(false);
-        //int p = shuffled.Length;
-        //for (int n = p - 1; n > 0; n--)
-        //{
-        //    int r = rand.Next(0, n);
-        //    GameObject t = shuffled[r];
-        //    shuffled[r] = shuffled[n];
-        //    shuffled[n] = t;
-        //}
-        //for (int r = 0; r < 3; r++)
-        //{
-        //    for (int c = 0; c < 3; c++)
-        //    {
-        //        grid[r, c] = shuffled[(r * 3) + c];
-        //        grid[r, c].GetComponent<TileScript>().SetGridIndices(r, c);
-        //        grid[r, c].GetComponent<RectTransform>().localPosition = new Vector3((c - 1) * 182, (r - 1) * -182, 0);
-        //    }
-        //}
-        //gameOn = true;
-    }
-
-    //public void SwapTiles(int r1, int c1, int r2, int c2)
-    //{
-    //    GameObject tempTile = grid[r1, c1];
-    //    grid[r1, c1] = grid[r2, c2];
-    //    grid[r2, c2] = tempTile;
-    //    for (int r = 0; r < 3; r++)
-    //    {
-    //        for (int c = 0; c < 3; c++)
-    //        {
-    //            grid[r, c].GetComponent<TileScript>().SetGridIndices(r, c);
-    //            grid[r, c].GetComponent<RectTransform>().localPosition = new Vector3((c - 1) * 182, (r - 1) * -182, 0);
-    //        }
-    //    }
-    //}
 }

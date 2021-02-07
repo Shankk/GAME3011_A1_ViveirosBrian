@@ -21,6 +21,7 @@ public class TileScript : MonoBehaviour, IPointerClickHandler
 
     public void SetHiddenColor()
     {
+        HiddenColor = new Color(0f, 0f, 0f, 1f);
         gameObject.GetComponent<Image>().color = HiddenColor;
     }
 
@@ -36,7 +37,7 @@ public class TileScript : MonoBehaviour, IPointerClickHandler
         if( mgs.ScanEnabled && mgs.NumOfScans > 0)
         {
             Debug.Log("Object Name: " + gameObject.name + "Tile ID: " + TileID);
-            mgs.ScanTiles(TileID);           
+            mgs.ScanTiles(TileID);
         }
 
         if(mgs.ExtractEnabled && mgs.NumOfExtracts > 0)
