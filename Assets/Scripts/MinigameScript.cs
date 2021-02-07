@@ -28,7 +28,7 @@ public class MinigameScript : MonoBehaviour
         ExtractText.text = "Extracts: " + NumOfExtracts;
         NumOfScans = 6;
         NumOfExtracts = 3;
-        for(int i = 0; i < 256; i++)
+        for (int i = 0; i < 256; i++)
         {
             tiles[i] = Object.Instantiate(DirtTile);
             tiles[i].transform.SetParent(GridGroup.transform);
@@ -42,6 +42,11 @@ public class MinigameScript : MonoBehaviour
             CreateNewResource();
         }
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        ResetGame();
     }
 
     void CreateNewResource()
